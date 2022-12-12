@@ -6,7 +6,7 @@
     "postinstall": "flex-plugin pre-script-check"
   },
   "dependencies": {
-    "@twilio-paste/core": "^16.0.1",
+    "@twilio-paste/core": "^17.1.0",
     "@twilio-paste/icons": "^9.3.0",
     "@twilio/flex-plugin-scripts": "6.0.3",
     "moment": "^2.29.4",

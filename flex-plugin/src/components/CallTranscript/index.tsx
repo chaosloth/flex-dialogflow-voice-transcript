@@ -11,11 +11,12 @@ import {
   ChatBookend,
   ChatBookendItem,
   Tooltip,
+  Badge,
 } from "@twilio-paste/core";
 import Moment from "react-moment";
 import { useEffect, useState } from "react";
 import { useI18n } from "react-simple-i18n";
-
+import { BadgeVariants } from "@twilio-paste/badge/dist/types";
 export interface CallTranscriptProps {
   CallSid: any;
 }
@@ -44,6 +45,7 @@ export type TranscriptTurn = {
   Parameters: string;
   ReplyText: string;
   ResolvedInput: string;
+  SentimentAnalysisScore?: string;
 };
 
 // Standard variation
@@ -83,6 +85,20 @@ export const CallTranscript: React.FC<CallTranscriptProps> = (
       })
       .finally(() => setLoading(false));
   }, [props.CallSid]);
+
+  const getVariantForSentiment = (score: number): BadgeVariants => {
+    if (score <= -0.2) return "error";
+    else if (score <= -0.5) return "warning";
+    else if (score >= 0.5) return "success";
+    else return "neutral";
+  };
+
+  const getLabelForSentiment = (score: number): string => {
+    if (score <= -0.2) return t("sentiment.negative");
+    else if (score <= -0.5) return t("sentiment.poor");
+    else if (score >= 0.5) return t("sentiment.positive");
+    return t("sentiment.neutral");
+  };
 
   if (loading)
     return (
@@ -151,6 +167,28 @@ export const CallTranscript: React.FC<CallTranscriptProps> = (
                             <Moment format="hh:mm:ss" date={item.dateCreated} />
                           </ChatMessageMetaItem>
                         </Tooltip>
+                        {item.data.SentimentAnalysisScore && (
+                          <Tooltip
+                            text={item.data.SentimentAnalysisScore || "Unknown"}
+                          >
+                            <ChatMessageMetaItem>
+                              <Badge
+                                as="span"
+                                variant={getVariantForSentiment(
+                                  parseFloat(
+                                    item.data.SentimentAnalysisScore as string
+                                  )
+                                )}
+                              >
+                                {getLabelForSentiment(
+                                  parseFloat(
+                                    item.data.SentimentAnalysisScore as string
+                                  )
+                                )}
+                              </Badge>
+                            </ChatMessageMetaItem>
+                          </Tooltip>
+                        )}
                       </ChatMessageMeta>
                     </ChatMessage>
                   )}

@@ -35,6 +35,7 @@ export default class FlexDialogflowVoicePlugin extends FlexPlugin {
     const langData = {
       "en-US": translation_en_us,
       "ja-JP": translation_ja_jp,
+      ja: translation_ja_jp,
     };
 
     const userLocale =
