@@ -1,0 +1,12 @@
+{
+  "screenpop": "iframe",
+  "worker": "cconnolly",
+  "skillsNeeded": "General",
+  "AgentHandoffParameters": "{{widgets.connect_virtual_agent_2.VirtualAgentProviderData.AgentHandoffParameters}}",
+  "frameUrl": "https://twilio-care-8492-dev.twil.io/index.html",
+  "frameData": {
+    "answerPoint": "{{trigger.call.To}}",
+    "id": "{{widgets.connect_virtual_agent_2.VirtualAgentProviderData.ConversationId}}",
+    "CallSid": "{{trigger.call.CallSid}}"
+  }
+}
